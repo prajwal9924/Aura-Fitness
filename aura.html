@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Fitness</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            margin: 0;
+        }
+
+        .navbar .links a {
+            color: #fff;
+            margin-left: 1rem;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group button {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tab-content {
+            margin-top: 1rem;
+        }
+
+        .tab button {
+            padding: 0.5rem 1rem;
+            margin: 0.5rem;
+            border: none;
+            background-color: #ccc;
+            cursor: pointer;
+        }
+
+        .tab button.active {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .features,
+        .workouts,
+        .nutrition,
+        .weight-logger,
+        .water-meter {
+            margin-bottom: 2rem;
+        }
+
+        .features .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .features .feature img {
+            width: 50px;
+            height: 50px;
+            margin-right: 1rem;
+        }
+
+        .subscription {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 2rem;
+        }
+
+        .subscription-plan {
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 30%;
+        }
+
+        .subscription-plan h3 {
+            margin-top: 0;
+        }
+
+        .exercise-bar,
+        .weekly-goal {
+            margin-bottom: 2rem;
+        }
+
+        .exercise-bar progress {
+            width: 100%;
+        }
+
+        .calendar {
+            margin-bottom: 2rem;
+        }
+
+        .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar-table th,
+        .calendar-table td {
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .calendar-table .worked-out {
+            background-color: #a1c4fd;
+        }
+
+        .water-meter button {
+            padding: 0.5rem 1rem;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .water-meter {
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <h1>Aura Fitness</h1>
+            <div class="links">
+                <a href="#login" onclick="showSection('login')">Login</a>
+                <a href="#signup" onclick="showSection('signup')">Sign Up</a>
+                <a href="#home" onclick="showSection('home')">Home</a>
+                <a href="#bmi-input" onclick="showSection('bmi-input')">BMI</a>
+                <a href="#daily-life" onclick="showSection('daily-life')">Daily Life</a>
+                <a href="#tracker" onclick="showSection('tracker')">Tracker</a>
+                <a href="#subscription" onclick="showSection('subscription')">Subscription</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="login" class="login">
+            <h1>Login</h1>
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="login-username">Username:</label>
+                    <input type="text" id="login-username" name="login-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="login-password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </section>
+
+        <section id="signup" class="signup hidden">
+            <h1>Sign Up</h1>
+            <form id="signup-form" onsubmit="handleSignUp(event)">
+                <div class="form-group">
+                    <label for="signup-username">Username:</label>
+                    <input type="text" id="signup-username" name="signup-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password:</label>
+                    <input type="password" id="signup-password" name="signup-password" required>
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+        </section>
+
+        <section id="home" class="home hidden">
+            <h1>Aura Fitness</h1>
+            <div class="features">
+                <div class="feature">
+                    <img src="c:\Users\Prajwal\Downloads\360_F_283238306_g1PcJDrekiSCz1YFubOLWXlFdydY0tHX.webp" alt="Tracking">
+                    <p>Start tracking your workouts and nutrition!</p>
+                </div>
+                <div class="feature">
+                    <img src="c:\Users\Prajwal\Downloads\mindful-Weight-loss-Eat-exercise1-1293373516-967x544-1_jpg.webp" alt="Impact">
+                    <p>Discover the impact of your food and fitness.</p>
+                </div>
+                <div class="feature">
+                    <img src="c:\Users\Prajwal\Downloads\fitness-background.webp" alt="Mindful Eating">
+                    <p>Make mindful eating a habit for life.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="bmi-input" class="bmi-input hidden">
+            <h1>Enter Your Details</h1>
+            <form id="bmi-form" onsubmit="handleBMI(event)">
+                <div class="form-group">
+                    <label for="weight">Weight (kg):</label>
+                    <input type="number" id="weight" name="weight" required>
+                </div>
+                <div class="form-group">
+                    <label for="height">Height (cm):</label>
+                    <input type="number" id="height" name="height" required>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+
+        <section id="daily-life" class="daily-life hidden">
+            <h1>Daily Life Questions</h1>
+            <form id="daily-life-form" onsubmit="handleDailyLife(event)">
+                <div class="form-group">
+                    <label for="activity-level">Activity Level:</label>
+                    <select id="activity-level" name="activity-level" required>
+                        <option value="sedentary">Sedentary (little or no exercise)</option>
+                        <option value="light">Lightly active (light exercise/sports 1-3 days/week)</option>
+                        <option value="moderate">Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                        <option value="active">Active (hard exercise/sports 6-7 days a week)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="diet-type">Diet Type:</label>
+                    <select id="diet-type" name="diet-type" required>
+                        <option value="balanced">Balanced</option>
+                        <option value="high-protein">High-Protein</option>
+                        <option value="low-carb">Low-Carb</option>
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="vegan">Vegan</option>
+                    </select>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+
+        <section id="tracker" class="tracker hidden">
+            <h2>Your Fitness and Nutrition Tracker</h2>
+            <div class="bmi-info">
+                <h3>BMI: <span id="bmi-value"></span></h3>
+                <p id="bmi-category"></p>
+            </div>
+            <div class="workouts">
+                <h3>Workouts</h3>
+                <ul id="workout-list">
+                    <!-- Workout data will be populated here -->
+                </ul>
+            </div>
+            <div class="nutrition">
+                <h3>Nutrition</h3>
+                <ul id="nutrition-list">
+                    <!-- Nutrition data will be populated here -->
+                </ul>
+            </div>
+            <div class="weight-logger">
+                <h3>Log Your Weight</h3>
+                <form id="weight-log-form" onsubmit="logWeight(event)">
+                    <div class="form-group">
+                        <label for="weight-date">Date:</label>
+                        <input type="date" id="weight-date" name="weight-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="logged-weight">Weight (kg):</label>
+                        <input type="number" id="logged-weight" name="logged-weight" required>
+                    </div>
+                    <button type="submit">Log Weight</button>
+                </form>
+                <canvas id="weight-chart" width="400" height="200"></canvas>
+            </div>
+            <div class="exercise-bar">
+                <h3>Exercise Progress</h3>
+                <progress id="exercise-progress" value="0" max="100"></progress>
+            </div>
+            <div class="weekly-goal">
+                <h3>Weekly Goal</h3>
+                <p id="weekly-goal-text">Complete 150 minutes of exercise this week.</p>
+                <progress id="weekly-goal-progress" value="0" max="150"></progress>
+            </div>
+            <div class="calendar">
+                <h3>Workout Calendar</h3>
+                <table class="calendar-table" id="calendar-table">
+                    <!-- Calendar data will be populated here -->
+                </table>
+            </div>
+            <div class="water-meter">
+                <h3>Water Intake</h3>
+                <progress id="water-progress" value="0" max="8"></progress>
+                <p id="water-intake">0/8 cups</p>
+                <button onclick="logWaterIntake()">I drank water</button>
+            </div>
+        </section>
+
+        <section id="subscription" class="subscription hidden">
+            <h2>Subscription Plans</h2>
+            <div class="subscription">
+                <div class="subscription-plan">
+                    <h3>Basic</h3>
+                    <p>Access to basic features</p>
+                    <p>$5/month</p>
+                    <button onclick="subscribe('Basic')">Subscribe</button>
+                </div>
+                <div class="subscription-plan">
+                    <h3>Premium</h3>
+                    <p>Access to premium features</p>
+                    <p>$10/month</p>
+                    <button onclick="subscribe('Premium')">Subscribe</button>
+                </div>
+                <div class="subscription-plan">
+                    <h3>Pro</h3>
+                    <p>Access to all features</p>
+                    <p>$20/month</p>
+                    <button onclick="subscribe('Pro')">Subscribe</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            showSection('login');
+        });
+
+        function showSection(sectionId) {
+            document.querySelectorAll('main > section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            showSection('home');
+        }
+
+        function handleSignUp(event) {
+            event.preventDefault();
+            showSection('home');
+        }
+
+        function handleBMI(event) {
+            event.preventDefault();
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100;
+            const bmi = (weight / (height * height)).toFixed(2);
+            document.getElementById('bmi-value').textContent = bmi;
+            let category = '';
+            if (bmi < 18.5) {
+                category = 'Underweight';
+            } else if (bmi < 25) {
+                category = 'Normal weight';
+            } else if (bmi < 30) {
+                category = 'Overweight';
+            } else {
+                category = 'Obesity';
+            }
+            document.getElementById('bmi-category').textContent = category;
+            showSection('daily-life');
+        }
+
+        function handleDailyLife(event) {
+            event.preventDefault();
+            showWorkoutAndNutrition();
+            showSection('tracker');
+        }
+
+        function showWorkoutAndNutrition() {
+            const workouts = [
+                { name: "Push-ups", reps: "15 reps", importance: "Strengthens upper body and core." },
+                { name: "Squats", reps: "20 reps", importance: "Strengthens legs and glutes." },
+                { name: "Lunges", reps: "15 reps each leg", importance: "Improves balance and leg strength." },
+                { name: "Plank", reps: "Hold for 1 minute", importance: "Strengthens core muscles." },
+                { name: "Burpees", reps: "10 reps", importance: "Full body workout." },
+                { name: "Jumping Jacks", reps: "30 reps", importance: "Good for cardiovascular health." },
+                { name: "Mountain Climbers", reps: "20 reps each leg", importance: "Improves stamina and strength." },
+                { name: "Bicep Curls", reps: "15 reps each arm", importance: "Strengthens biceps." },
+                { name: "Tricep Dips", reps: "15 reps", importance: "Strengthens triceps." },
+                { name: "Shoulder Press", reps: "15 reps", importance: "Strengthens shoulders." }
+            ];
+
+            const nutritionPlans = [
+                { name: "Balanced Diet", plan: "Includes a variety of foods from all food groups in appropriate amounts." },
+                { name: "High-Protein Diet", plan: "Focus on foods rich in protein like meat, fish, eggs, and legumes." },
+                { name: "Low-Carb Diet", plan: "Reduces intake of carbohydrates, focusing on proteins and fats." },
+                { name: "Vegetarian Diet", plan: "Excludes meat and fish, includes plant-based foods." },
+                { name: "Vegan Diet", plan: "Excludes all animal products, focuses on plant-based foods." },
+                { name: "Mediterranean Diet", plan: "Emphasizes fruits, vegetables, whole grains, and healthy fats." },
+                { name: "Paleo Diet", plan: "Focuses on foods that were available to our prehistoric ancestors." },
+                { name: "Keto Diet", plan: "High-fat, low-carb diet that helps in weight loss." }
+            ];
+
+            const workoutList = document.getElementById('workout-list');
+            workoutList.innerHTML = '';
+            workouts.forEach(workout => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = <strong>${workout.name}</strong> (${workout.reps}) - ${workout.importance};
+                workoutList.appendChild(listItem);
+            });
+
+            const nutritionList = document.getElementById('nutrition-list');
+            nutritionList.innerHTML = '';
+            nutritionPlans.forEach(plan => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = <strong>${plan.name}</strong> - ${plan.plan};
+                nutritionList.appendChild(listItem);
+            });
+        }
+
+        function logWeight(event) {
+            event.preventDefault();
+            const date = document.getElementById('weight-date').value;
+            const weight = parseFloat(document.getElementById('logged-weight').value);
+            const weightData = JSON.parse(localStorage.getItem('weightData') || '[]');
+            weightData.push({ date, weight });
+            localStorage.setItem('weightData', JSON.stringify(weightData));
+            updateWeightChart(weightData);
+        }
+
+        function updateWeightChart(weightData) {
+            const ctx = document.getElementById('weight-chart').getContext('2d');
+            const labels = weightData.map(entry => entry.date);
+            const data = weightData.map(entry => entry.weight);
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Weight Progress',
+                        data,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function logWaterIntake() {
+            let waterIntake = parseInt(localStorage.getItem('waterIntake') || '0');
+            waterIntake += 1;
+            if (waterIntake > 8) waterIntake = 8;
+            localStorage.setItem('waterIntake', waterIntake);
+            document.getElementById('water-progress').value = waterIntake;
+            document.getElementById('water-intake').textContent = ${waterIntake}/8 cups;
+        }
+
+        function subscribe(plan) {
+            alert(You have subscribed to the ${plan} plan.);
+        }
+
+        function waterReminder() {
+            alert('Time to drink water!');
+        }
+
+        setInterval(waterReminder, 3600000); // Reminds every hour
+    </script>
+</body>
+</html>
